@@ -110,6 +110,3 @@ res.val$upper.OR=exp(res.val$upper)
 #export results
 write.table(res.val,file=paste(output.path,"/res_validation.tsv",sep="")
             ,row.names=F,col.names=T,sep="\t")
-
-write.table(xdata,file=paste(output.path,"../../phenotypes/data_validation_rank_based_norm_transf.tsv",sep=""),row.names=F,col.names=T)
-
