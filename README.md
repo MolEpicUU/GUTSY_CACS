@@ -6,7 +6,7 @@
 #### Last update: 2022-June-09
 
 ### SCRIPTS (they need to be run in the following order):
-* 0_Data/0_create_data.R : It creates the test datasets used in the subsequent analyses. You can also download the datasets directly from this folder.
+* 0_Data/0_create_data.R : It creates the test datasets used in the subsequent analyses.
 * 1_simulations/create.random.R: It shuffles the metagenomics and the metadata files to test different models in a random sample maintaining the distributions. In the created file, the association between species and coronary artery calcium score (CACS) follows the null hypothesis.
 * 1_simulations/linear_model_robust_random_data.R: It runs the association among the species and the CACS using a robust linear model. CACS and species are ln(x+1) transformed.
 * 1_simulations/two_stage_model_random_data.R: It runs the association among the species and the CACS using two-stage model. The first stage is a logistic regression and the second a linear model on the non-zero values in the CACS. Counts on CACS are natural log transformed and species are ln(x+1) transformed.
