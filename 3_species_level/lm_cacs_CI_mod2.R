@@ -23,11 +23,10 @@ import.data=unique(import.data[import.data$q.value<0.05,"var.x"])
 noms=grep("HG3A.",import.data,value=T)
 
 dades=dades[,c("casctot","agev1","gender","siteid","q005a","plate","smokestatus","q134","diab_treat","HBP_treat","HC_treat","log.fibrer","log.energi",
-grep("____mgs",names(dades),value=T),
 noms)]
 
 yi="casctot"
-covari=c("agev1","gender","siteid","siteid:plate","q005a","smokestatus","q134","diab_treat","HBP_treat","HC_treat","log.fibrer","log.energi","shannon____mgs")
+covari=c("agev1","gender","siteid","siteid:plate","q005a","smokestatus","q134","diab_treat","HBP_treat","HC_treat","log.fibrer","log.energi")
 
 dades$gender=as.factor(dades$gender)
 dades$siteid=as.factor(dades$siteid)
