@@ -34,8 +34,8 @@ names(met_info)[1]="var.y"
 
 
 res1=spearman.cor.fun(sel1,dades,
-		      var=c("agev1","gender","siteid","q005a","plate","shannon____mgs"),
-                      covari1=c("agev1","gender","siteid","siteid:plate","q005a","shannon____mgs"),
+		      var=c("agev1","gender","siteid","q005a","plate"),
+                      covari1=c("agev1","gender","siteid","siteid:plate","q005a"),
                       cores=ncores)
 
 res1=merge(res1,met_info,by="var.y")
