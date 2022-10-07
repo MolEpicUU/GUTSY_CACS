@@ -3,7 +3,7 @@ rm(list=ls())
 #set the working director
 set.seed(123)
 input.path="./"
-output.path="./10_inflammation_infection/"
+output.path="./11_inflammation_infection/"
 dir.create(output.path, showWarnings = FALSE)
 ncores=1
 
