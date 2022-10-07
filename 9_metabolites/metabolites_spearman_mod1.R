@@ -21,7 +21,7 @@ source("/proj/nobackup/sens2019512/wharf/ssayols/ssayols-sens2019512/github/casc
 
 #prepare data
 sel1=grep("HG3A.",res_lm.mod1[res_lm.mod1$q.value<0.05,"var.x"],value=T)
-sel1=grep("Streptococc",sel1,value=T)
+#sel1=grep("Streptococc",sel1,value=T)
 
 
 dades$gender=as.factor(dades$gender)
