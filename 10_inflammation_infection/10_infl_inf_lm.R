@@ -19,7 +19,7 @@ dades=import(paste(input.path,"./0_Data/pheno_2021_06_21.tsv",sep=""))
 source(paste(input.path,"/functions/linear_model.R",sep=""))
 
 #preparate data
-strep=grep("Streptococcus",res_lm.mod2[res_lm.mod2$q.value<0.05,"var.x"],value=T)
+bact=res_lm.mod2[res_lm.mod2$q.value<0.05,"var.x"]
 
 dades$gender=as.factor(dades$gender)
 dades$smokestatus=as.factor(dades$smokestatus)
@@ -35,25 +35,25 @@ dades$log_CRP=log(dades$hscrp_res)
 dades$log_neut=log(dades$neut_res)
 dades$log_leukt=log(dades$lpk_res)
 
-dades[,strep]=apply(dades[,strep],2,log1p)
+dades[,bact]=apply(dades[,bact],2,log1p)
 
 yi=c("log_CRP","log_neut","log_leukt")
 
 covari=c("agev1","gender","siteid","siteid:plate","q005a","smokestatus",
          "q134","diab_treat","HBP_treat","HC_treat","log.fibrer",
-         "log.energi","shannon____mgs")
+         "log.energi")
 
 var=c("agev1","gender","siteid","q005a","smokestatus",
                "q134","diab_treat","HBP_treat","HC_treat","plate","log.fibrer",
-               "log.energi","shannon____mgs", "bmi","ppi")
+               "log.energi", "bmi","ppi")
 
-xdades=dades[,c(var,strep,yi)]
+xdades=dades[,c(var,bact,yi)]
 
 xdades=xdades[complete.cases(xdades[,var]),]
 
 res<-bplapply(yi,function(i){
   
-  xres<-bplapply(strep,function(x){
+  xres<-bplapply(bact,function(x){
     xres <- fastlm.fun(x,i,xdades,covari,log=FALSE,rank.1=FALSE)
     data.frame(xres)
   }, BPPARAM = MulticoreParam(5))
@@ -66,13 +66,13 @@ res <- do.call(rbind, res)
 res=data.frame(res,stringsAsFactors = F)
 res$q.value=p.adjust(res$p.value,"BH")
 
-strep2=unique(res$var.x[res$q.value<0.05])
+bact2=unique(res$var.x[res$q.value<0.05])
 covari=c("agev1","gender","siteid","siteid:plate","q005a","smokestatus",
-         "q134","diab_treat","HBP_treat","HC_treat","log.fibrer","log.energi","shannon____mgs", "bmi","ppi")
+         "q134","diab_treat","HBP_treat","HC_treat","log.fibrer","log.energi","bmi","ppi")
 
 res2<-bplapply(yi,function(i){
   
-  xres<-bplapply(strep2,function(x){
+  xres<-bplapply(bact2,function(x){
     xres <- fastlm.fun(x,i,xdades,covari,log=FALSE,rank.1=FALSE)
     data.frame(xres)
   }, BPPARAM = MulticoreParam(5))
