@@ -21,7 +21,7 @@ source("/proj/nobackup/sens2019512/wharf/ssayols/ssayols-sens2019512/github/casc
 
 #prepare data
 sel=grep("HG3A.",res_lm.mod2[res_lm.mod2$q.value<0.05,"var.x"],value=T)
-sel=grep("Streptococc",sel,value=T)
+#sel=grep("Streptococc",sel,value=T)
 
 dades$gender=as.factor(dades$gender)
 dades$siteid=as.factor(dades$siteid)
@@ -38,8 +38,8 @@ names(met_info)[1]="var.y"
 
 
 res=spearman.cor.fun(sel,dades,
-		      var=c("agev1","gender","siteid","q005a","plate","shannon____mgs","smokestatus","q134","diab_treat","HC_treat","HBP_treat","log.fibrer","log.energi","shannon____mgs"),
-                      covari1=c("agev1","gender","siteid","siteid:plate","q005a","shannon____mgs","smokestatus","q134","diab_treat","HC_treat",
+		      var=c("agev1","gender","siteid","q005a","plate","shannon____mgs","smokestatus","q134","diab_treat","HC_treat","HBP_treat","log.fibrer","log.energi"),
+                      covari1=c("agev1","gender","siteid","siteid:plate","q005a","smokestatus","q134","diab_treat","HC_treat",
 "HBP_treat","log.fibrer","log.energi"),
                       cores=ncores)
 
