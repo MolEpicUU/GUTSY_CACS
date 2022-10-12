@@ -27,9 +27,8 @@ yi="casctot"
 covari=c("agev1","gender","siteid_plate","q005a")
 
 dades$gender=as.factor(dades$gender)
-dades$siteid=as.factor(dades$siteid)
+dades$siteid_plate=as.factor(dades$siteid_plate)
 dades$q005a=as.factor(dades$q005a)
-dades$plate=as.factor(dades$plate)
 
 print("#### model ####")
 print(paste(yi,"~ microbiota+",paste(covari,collapse="+"),sep=""))
