@@ -22,16 +22,15 @@ source("./functions/linear_model.R")
 import.data=unique(import.data[import.data$q.value<0.05,"var.x"])
 noms=grep("HG3A.",import.data,value=T)
 
-dades=dades[,c("casctot","agev1","gender","siteid","q005a","plate","smokestatus","q134","diab_treat","HBP_treat","HC_treat","log.fibrer","log.energi",
+dades=dades[,c("casctot","agev1","gender","siteid_plate","q005a","smokestatus","q134","diab_treat","HBP_treat","HC_treat","log.fibrer","log.energi",
 noms)]
 
 yi="casctot"
-covari=c("agev1","gender","siteid","siteid:plate","q005a","smokestatus","q134","diab_treat","HBP_treat","HC_treat","log.fibrer","log.energi")
+covari=c("agev1","gender","siteid_plate","q005a","smokestatus","q134","diab_treat","HBP_treat","HC_treat","log.fibrer","log.energi")
 
 dades$gender=as.factor(dades$gender)
-dades$siteid=as.factor(dades$siteid)
+dades$siteid_plate=as.factor(dades$siteid_plate)
 dades$q005a=as.factor(dades$q005a)
-dades$plate=as.factor(dades$plate)
 dades$smokestatus=as.factor(dades$smokestatus)
 dades$q134=as.factor(dades$q134)
 dades$diab_treat=as.factor(dades$diab_treat)
@@ -48,7 +47,7 @@ print("##### time #####")
 system.time(res<-bplapply(noms,function(x){
   res <- fastlm.fun(x,yi,dades,covari,log=FALSE,rank.1=FALSE)
   data.frame(res)
-}, BPPARAM = MulticoreParam(15)))
+}, BPPARAM = MulticoreParam(ncores)))
 res <- do.call(rbind, res)
 res$q.value <- p.adjust(res$p.value, method = "BH")
 
