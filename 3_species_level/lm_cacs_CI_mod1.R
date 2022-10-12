@@ -24,7 +24,7 @@ noms=grep("HG3A.",names(dades),value=T)
 
 
 yi="casctot"
-covari=c("agev1","gender","siteid","siteid:plate","q005a")
+covari=c("agev1","gender","siteid_plate","q005a")
 
 dades$gender=as.factor(dades$gender)
 dades$siteid=as.factor(dades$siteid)
