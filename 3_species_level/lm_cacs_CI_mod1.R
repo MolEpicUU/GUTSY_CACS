@@ -18,7 +18,7 @@ dades=import(paste(input.path,"pheno_2021_06_21.tsv",sep=""))
 source("./functions/linear_model.R")
 
 #prepare data
-dades=dades[,c("casctot","agev1","gender","siteid","q005a","plate",grep("HG3A.",names(dades),value=T))]
+dades=dades[,c("casctot","agev1","gender","siteid_plate","q005a",grep("HG3A.",names(dades),value=T))]
 
 noms=grep("HG3A.",names(dades),value=T)
 
