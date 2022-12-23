@@ -1,0 +1,8 @@
+gut_name	gut_id	gut_level	oral_name	oral_id	oral_level	n	estimate	p.value	q.value	message
+Streptococcus anginosus	HG3A.0680	species	Streptococcus anginosus	Ho1B.0260	species	412	0.147140819174889	0.000708594306483407	0.00165338671512795	
+Streptococcus oralis subsp. oralis	HG3A.0705	subspecies	Streptococcus oralis subsp. oralis	Ho1B.0261	subspecies	412	0.0881899802792176	0.0795375536713093	0.092698484116131	
+Streptococcus parasanguinis	HG3A.0117	species	Streptococcus parasanguinis	Ho1B.0005	species	412	0.27313010039506	8.40529864619593e-08	2.94185452616858e-07	
+Streptococcus gordonii	HG3A.0713	species	Streptococcus gordonii	Ho1B.0065	species	412	0.104341880449099	0.00918949632748971	0.0128652948584856	
+Rothia mucilaginosa	HG3A.0559	species	Rothia mucilaginosa	Ho1B.0001	species	412	-0.0859616256343376	0.092698484116131	0.092698484116131	
+Rothia mucilaginosa	HG3A.0559	species	Rothia mucilaginosa	Ho1B.0117	species	412	0.46973745355633	8.28495623060648e-23	5.79946936142454e-22	
+Bifidobacterium dentium	HG3A.0579	species	Bifidobacterium dentium	Ho1B.0146	species	412	0.123108903499178	0.00354647997098161	0.00620633994921783	
