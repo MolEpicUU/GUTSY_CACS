@@ -69,7 +69,7 @@ colnames(gut) <- sapply(strsplit(colnames(gut), split = "[.]"), function(x) past
 
 # make and export tables
 
-data <- data.frame(lopnr, caries, fillings, gingivitis, sex, age, plate, country, smoke, education, antibiotics, ppi, eat, smoke2, brush, lasthour, plaque, gut, bmi, family, gut, oral)
+data <- data.frame(lopnr, caries, fillings, gingivitis, sex, age, plate, country, smoke, education, antibiotics, ppi, eat, smoke2, brush, lasthour, plaque, bmi, family, gut, oral)
 data <- data[which(!is.na(age) & !is.na(sex)), ]
 
 export(data, "processed/mods.tsv", na = "NA")

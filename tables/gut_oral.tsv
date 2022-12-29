@@ -1,8 +1,8 @@
 gut_name	gut_id	gut_level	oral_name	oral_id	oral_level	n	estimate	p.value	q.value	message
-Streptococcus anginosus	HG3A.0680	species	Streptococcus anginosus	Ho1B.0260	species	412	0.147140819174889	0.000708594306483407	0.00165338671512795	
-Streptococcus oralis subsp. oralis	HG3A.0705	subspecies	Streptococcus oralis subsp. oralis	Ho1B.0261	subspecies	412	0.0881899802792176	0.0795375536713093	0.092698484116131	
-Streptococcus parasanguinis	HG3A.0117	species	Streptococcus parasanguinis	Ho1B.0005	species	412	0.27313010039506	8.40529864619593e-08	2.94185452616858e-07	
-Streptococcus gordonii	HG3A.0713	species	Streptococcus gordonii	Ho1B.0065	species	412	0.104341880449099	0.00918949632748971	0.0128652948584856	
-Rothia mucilaginosa	HG3A.0559	species	Rothia mucilaginosa	Ho1B.0001	species	412	-0.0859616256343376	0.092698484116131	0.092698484116131	
-Rothia mucilaginosa	HG3A.0559	species	Rothia mucilaginosa	Ho1B.0117	species	412	0.46973745355633	8.28495623060648e-23	5.79946936142454e-22	
-Bifidobacterium dentium	HG3A.0579	species	Bifidobacterium dentium	Ho1B.0146	species	412	0.123108903499178	0.00354647997098161	0.00620633994921783	
+Streptococcus anginosus	HG3A.0680	species	Streptococcus anginosus	Ho1B.0260	species	462	0.162899053404887	0.000207606981223448	0.000484416289521378	
+Streptococcus oralis subsp. oralis	HG3A.0705	subspecies	Streptococcus oralis subsp. oralis	Ho1B.0261	subspecies	462	0.0512969496850045	0.210550961848127	0.210550961848127	
+Streptococcus parasanguinis	HG3A.0117	species	Streptococcus parasanguinis	Ho1B.0005	species	462	0.255464295719684	1.44913555126249e-07	5.0719744294187e-07	
+Streptococcus gordonii	HG3A.0713	species	Streptococcus gordonii	Ho1B.0065	species	462	0.128131820296629	0.00233947130947295	0.00327525983326213	
+Rothia mucilaginosa	HG3A.0559	species	Rothia mucilaginosa	Ho1B.0001	species	462	-0.105693397126531	0.0264495141431502	0.0308577665003419	
+Rothia mucilaginosa	HG3A.0559	species	Rothia mucilaginosa	Ho1B.0117	species	462	0.447356972860907	4.38357321657621e-23	3.06850125160335e-22	
+Bifidobacterium dentium	HG3A.0579	species	Bifidobacterium dentium	Ho1B.0146	species	462	0.137480673987664	0.000991765718987802	0.00173559000822865	

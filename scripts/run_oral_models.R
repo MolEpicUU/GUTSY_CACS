@@ -69,7 +69,7 @@ spearman.fun <- function(y, x, z, re) {
 
 # gut-oral
 
-cov <- data[, c("age", "sex", "country", "plate")]
+cov <- data[, c("age", "sex", "plate")]
 gut_oral <- bplapply(1:nrow(overlap), function(i) spearman.fun(data[, overlap$gut[i]], data[, overlap$oral[i]], cov, data$family), BPPARAM = MulticoreParam(cores))
 gut_oral <- do.call(rbind, gut_oral)
 gut_oral$q.value <- p.adjust(gut_oral$p.value, method = "BH", n = sum(!is.na(gut_oral$p.value)))
