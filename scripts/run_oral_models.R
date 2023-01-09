@@ -84,7 +84,7 @@ export(gut_oral, "results/gut_oral.tsv")
 
 # dental hygiene
 
-id <- gut_oral$oral_id[which(gut_oral$q.value < 0.05)]
+id <- gut_oral$oral_id[which(gut_oral$q.value < 0.05 & gut_oral$estimate > 0)]
 cov <- data[, c("age", "sex", "smoke", "plaque", "education", "lasthour")]
 mgs <- data[, match(id, colnames(data))]
 
@@ -169,7 +169,7 @@ colnames(gingivitis) <- paste0("gingivitis_", colnames(gingivitis))
 
 # make and export table
 
-res <- data.frame(name = gut_oral$oral_name[which(gut_oral$q.value < 0.05)], id = id, level = gut_oral$oral_level[which(gut_oral$q.value < 0.05)], caries, fillings, gingivitis)
+res <- data.frame(name = gut_oral$oral_name[match(id, gut_oral$oral_id)], id = id, level = gut_oral$oral_level[match(id, gut_oral$oral_id)], caries, fillings, gingivitis)
 export(res, "results/oral_health.tsv")
 
 sessionInfo()

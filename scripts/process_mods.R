@@ -14,6 +14,7 @@ family_bmi <- import("raw/BMI_family_MODS.csv")
 
 # clean
 
+pheno <- pheno[which(!is.na(pheno$Age)),]
 oral_info <- oral[, 1:11]
 rownames(oral) <- oral$MGS
 oral <- t(oral[, 12:ncol(oral)])
