@@ -5,7 +5,7 @@ library(fgsea)
 
 set.seed(1)
 
-# import and clean data
+# load data
 
 data <- import("processed/data.tsv")
 info <- import("raw/HG3.A.7_tax.xlsx")
@@ -71,13 +71,7 @@ gsea.fun <- function(res, pathways) {
   
 }
 
-# gmm
-
-gmm.res <- gsea.fun(basic, gmm)
-gmm.res <- data.frame(gmm.res, gmm_info[match(gmm.res$id, gmm_info$id), c("name", "hl1", "hl2")])
-export(gmm.res, "results/gmm.tsv")
-
-# genera
+# run gsea on genera
 
 genera <- lapply(unique(info$genus), function(genus) {
   
@@ -89,15 +83,4 @@ genera <- genera[which(!names(genera) == "unclassified")]
 genera.res <- gsea.fun(basic, genera)
 export(genera.res, "results/genera.tsv")
 
-# leave-one-out
 
-loo <- lapply(names(genera), function(genus) {
-  
-  basic <- basic[which(!basic$id %in% genera[[genus]]), ]
-  gmm.res <- gsea.fun(basic, gmm)
-  data.frame(genus = genus, gmm.res, gmm_info[match(gmm.res$id, gmm_info$id), c("name", "hl1", "hl2")])
-  
-})
-loo <- do.call(rbind, loo)
-loo <- loo[which(loo$id %in% gmm.res$id[which(gmm.res$positive_q.value < 0.05| gmm.res$negative_q.value < 0.05)]), ]
-export(loo, "results/loo.tsv")

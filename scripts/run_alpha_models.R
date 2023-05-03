@@ -1,24 +1,27 @@
+
 # load libraries
 
 library(rio)
+library(lmerTest)
 
 # import data
 
 data <- import("processed/data.tsv")
 
-# linear regression function
+# linear mixed regression function
 
-lm.fun <- function(y, x, z) {
+lmer.fun <- function(y, x, z, re) {
   
   tryCatch({
     
     y <- log1p(y)
-    data <- data.frame(y = y, x = x, z)
+    data <- data.frame(y = y, x = x, z, re)
     data <- data[which(complete.cases(data)), ]
-    fit <- lm(y ~ ., data)
+    fit <- lmer(y ~ . - re + (1 | re), data)
     coef <- summary(fit)$coefficients
-    ci <- confint(fit)
-    data.frame(estimate = coef[2, 1], lower = ci[2, 1], upper = ci[2, 2], se = coef[2, 2], p.value = coef[2, 4], n = nrow(data), message = NA)
+    lower <- coef[, 1] + qt(0.025, coef[, 3]) * coef[, 2]
+    upper <- coef[, 1] + qt(0.975, coef[, 3]) * coef[, 2]
+    data.frame(estimate = coef[2, 1], lower = lower[2], upper = upper[2], se = coef[2, 2], p.value = coef[2, 5], n = nrow(data), message = NA)
     
   }, warning = function(w) {
     
@@ -37,16 +40,18 @@ lm.fun <- function(y, x, z) {
 cacstot <- data$cacstot
 alpha <- data[, c("shannon", "simpson", "invsimpson", "chao")]
 cov <- data[, c("age", "sex", "country", "site_plate")]
+family <- data$family
 
-basic <- lapply(colnames(alpha), function(x) lm.fun(cacstot, alpha[, x], cov))
+basic <- lapply(colnames(alpha), function(x) lmer.fun(cacstot, alpha[, x], cov,family))
 basic <- do.call(rbind, basic)
 colnames(basic) <- paste0("basic_", colnames(basic))
 
 # main model
 
-cov <- data[, c("age", "sex", "country", "site_plate", "smoke", "pa", "carb", "protein", "fiber", "sbp", "dbp", "chol", "hdl", "ldl", "tg", "diab", "bmi", "chol_med", "bp_med", "diab_med")]
+cov <- data[, c( "smoke", "pa", "carb", "protein", "fiber", "sbp", "dbp", "chol", "hdl", "ldl", "tg", "diab", "bmi", "chol_med", "bp_med", "diab_med")]
 
-main <- lapply(colnames(alpha), function(x) lm.fun(cacstot, alpha[, x], cov))
+
+main <- lapply(colnames(alpha), function(x) lmer.fun(cacstot, alpha[, x], cov,family))
 main <- do.call(rbind, main)
 colnames(main) <- paste0("main_", colnames(main))
 
@@ -56,3 +61,4 @@ res <- data.frame(alpha = colnames(alpha), basic, main)
 export(res, "results/alpha.tsv")
 
 sessionInfo()
+

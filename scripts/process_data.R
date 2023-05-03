@@ -18,6 +18,8 @@ drugs <- import("raw/SCAPIS-REGISTERSU-1715-LMED-20220511-T_R_LMED_27947_2021.tx
 king <- import("raw/bacteria_cacs_list_related_kingtable.kin0", format = "tsv")
 ds1 <- readRDS("raw/lungut03.dsMgsCounts.rds")
 ds2 <- readRDS("raw/upugut03.dsMgsCounts.rds")
+out<-read.table("raw/bacteria_cacs_list_related_1st.king.cutoff.out.id")
+GMM<-import("/proj/nobackup/sens2019512/users/baldanzi/pa_gut/processed/GMMrelativeabundance_9819.tsv")
 
 # clean
 
@@ -160,6 +162,8 @@ plate <- tax_pheno$plate
 site_plate <- paste(site, plate, sep = "_")
 family <- king$ID1
 family[which(is.na(family))] <- scapis_id[which(is.na(family))]
+family1=scapis_id
+family1[which(family1%in%out[,1]==T)]<-0
 shannon <- diversity(ds, index = "shannon")
 simpson <- diversity(ds, index = "simpson")
 invsimpson <- diversity(ds, index = "invsimpson")
@@ -167,15 +171,39 @@ chao <- estimateR(ds)["S.chao1", ]
 chao[which(is.na(shannon))] <- NA
 cvd <- apply(pheno[, c("q030ax", "q030bx", "q030cx", "q030dx", "q030ex", "q030fx", "q030gx", "q030ix")], 1, function(x) any(x == 1, na.rm = T))
 
+cvd2 <- pheno[, c("q030ax", "q030bx", "q030cx", "q030dx", "q030ex", "q030fx", "q030gx", "q030ix")]
+names(cvd2)=c("MI","Angina","Atrial.Fibrillation","Heart.Failure","Valvular.disease","Bypass.Surgery","Revascularization","Stroke")
+
+cvd2.1=ifelse(cvd2$MI==1 |  cvd2$Angina==1 | cvd2$Bypass.Surgery==1 | cvd2$Revascularization==1,
+1,0)
+cvd2.2=ifelse(cvd2.1==1 | cvd2$Heart.Failure==1 |cvd2$Atrial.Fibrillation==1 | cvd2$Valvular.disease==1 | cvd2$Stroke==1,1,0)
+
 # mgs
 
 mgs <- tax_pheno[, which(grepl("HG3A", colnames(tax_pheno)))]
 colnames(mgs) <- gsub("^.*___", "", colnames(mgs))
 
-# make and export tables
+# prepare the table
 
-data <- data.frame(scapis_id, cacstot, cacstot_cat, athero, stenosis, duke, sis, plaque, age, sex, country, smoke, pa, tg, ldl, hdl, chol, sbp, dbp, bmi, crp, neut, leuk, energy, carb, protein, fat, fiber, diab, crohn, chol_med, bp_med, diab_med, ppi, narrow, broad, site, site_plate, family, shannon, simpson, invsimpson, chao, mgs)
+data <- data.frame(scapis_id, cacstot, cacstot_cat, athero, stenosis, duke, sis, plaque, age, sex, country, smoke, pa, tg, ldl, hdl, chol, sbp, dbp, bmi, crp, neut, leuk, energy, carb, protein, fat, fiber, diab, crohn, chol_med, bp_med, diab_med, ppi, narrow, broad, site, site_plate, family,family1, shannon, simpson, invsimpson, chao, mgs)
+data2<- data.frame(scapis_id, cacstot, cacstot_cat, athero, stenosis, duke, sis, plaque, age, sex, country, smoke, pa, tg, ldl, hdl, chol, sbp, dbp, bmi, crp, neut, leuk, energy, carb, protein, fat, fiber, diab, crohn, chol_med, bp_med, diab_med, ppi, narrow, broad, site, site_plate, family,family1, shannon, simpson, invsimpson, chao, mgs,cvd2,cvd2.1,cvd2.2)
+
 data <- data[which(complete.cases(data[, c("cacstot", "age", "sex", "country", "site_plate")]) & !cvd), ]
+data2 <- data2[complete.cases(data2[, c("cacstot", "age", "sex", "country", "site_plate")]) , ]
+
+#GMM
+
+names(GMM)[1]="scapis_id"
+
+data=merge(data,GMM,by="scapis_id")
+data2=merge(data2,GMM,by="scapis_id")
+
+#Export the table
+
 export(data, "processed/data.tsv", na = "NA")
+export(data2,"processed/data_CVD.tsv",na="NA")
 
 sessionInfo()
+
+
+
